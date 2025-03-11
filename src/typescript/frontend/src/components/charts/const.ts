@@ -1,25 +1,24 @@
-// cspell:word Featureset
 // cspell:word localstorage
 
 import {
-  type ChartingLibraryFeatureset,
   type ChartingLibraryWidgetOptions,
   type LanguageCode,
   type ResolutionString,
   type ThemeName,
 } from "@static/charting_library";
-import { Period } from "@econia-labs/emojicoin-sdk";
+import { ArenaPeriod, Period } from "@sdk/const";
 import { GREEN as GREEN_HEX, PINK as PINK_HEX } from "theme/colors";
 import { hexToRgba } from "utils/hex-to-rgba";
 import { CDN_URL } from "lib/env";
 
 export const TV_CHARTING_LIBRARY_RESOLUTIONS = [
+  "15S",
   "1",
   "5",
   "15",
   "30",
   "60",
-  "4H",
+  "240",
   "1D",
 ] as ResolutionString[];
 
@@ -28,7 +27,8 @@ export const GREEN = hexToRgba(GREEN_HEX);
 export const PINK_OPACITY_HALF = hexToRgba(`${PINK_HEX}80`);
 export const GREEN_OPACITY_HALF = hexToRgba(`${GREEN_HEX}80`);
 
-export const ResolutionStringToPeriod: { [key: string]: Period } = {
+export const ResolutionStringToPeriod: { [key: string]: Period | ArenaPeriod } = {
+  "15S": ArenaPeriod.Period15S,
   "1": Period.Period1M,
   "5": Period.Period5M,
   "15": Period.Period15M,
@@ -48,13 +48,13 @@ export const WIDGET_OPTIONS: Omit<ChartingLibraryWidgetOptions, "datafeed" | "co
   theme: "Dark" as ThemeName,
   locale: "en" as LanguageCode,
   custom_css_url: `${CDN_URL}/charting_library_stylesheets/emojicoin-dot-fun.css`,
-  enabled_features: ["iframe_loading_compatibility_mode"],
+  enabled_features: ["iframe_loading_compatibility_mode", "seconds_resolution"],
   disabled_features: [
-    "use_localstorage_for_settings" as ChartingLibraryFeatureset,
-    "left_toolbar" as ChartingLibraryFeatureset,
-    "control_bar" as ChartingLibraryFeatureset,
-    "study_templates" as ChartingLibraryFeatureset,
-    "snapshot_trading_drawings" as ChartingLibraryFeatureset,
+    "use_localstorage_for_settings",
+    "left_toolbar",
+    "control_bar",
+    "study_templates",
+    "snapshot_trading_drawings",
   ],
   fullscreen: false,
   autosize: true,
